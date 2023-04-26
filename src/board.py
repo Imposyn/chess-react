@@ -15,7 +15,7 @@ class Board:
         self._add_pieces('white')
         self._add_pieces('black')
 
-    def move(self, piece, move, testing=False):
+    def move_piece(self, piece, move, testing=False):
      initial = move.initial
      final = move.final
 
@@ -61,7 +61,21 @@ class Board:
      # set last move
      self.last_move = move
 
+     # Update board state
+     self.update_board()
+
      return True  # return True if move is successful
+    
+    def update_board(self):
+     for row in range(8):
+        for col in range(8):
+            piece = self.squares[row][col].piece
+            self.squares[row][col].isoccupied = (piece is not None)
+            if piece is not None:
+                piece.row = row
+                piece.col = col
+                #uppdaterar board genom att kontrollera om varje ruta är upptagen av en pjäs, och i så fall uppdatera pjäsens rad- och kolumnindex
+
 
     def valid_move(self, piece, move):
         return move in piece.moves
@@ -88,7 +102,7 @@ class Board:
     def in_check(self, piece, move):
         temp_piece = copy.deepcopy(piece)
         temp_board = copy.deepcopy(self)
-        temp_board.move(temp_piece, move, testing=True)
+        temp_board.move_piece(temp_piece, move, testing=True)
         
         for row in range(ROWS):
             for col in range(COLS):
