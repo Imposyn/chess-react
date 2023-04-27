@@ -5,7 +5,7 @@ from move import Move
 from sound import Sound
 import copy
 import os
-#Problem förmodligen här
+
 class Board:
 
     def __init__(self):
@@ -67,7 +67,7 @@ class Board:
      return True  # return True if move is successful
     
     def update_board(self):
-     for row in range(8):
+       for row in range(8):
         for col in range(8):
             piece = self.squares[row][col].piece
             self.squares[row][col].isoccupied = (piece is not None)
